@@ -6,16 +6,28 @@ class EventForm extends Component {
       title: '',
       date: '',
       city:'',
-      vanue:'',
+      venue:'',
       hostedBy:'',
     }
-    handleFormSubmit = (evt) => {
-      evt.preventDefault();
-      this.props.createEvent(this.state);
 
+    componentDidMount() {
+      if (this.props.selectedEvent !== null) {
+        this.setState({
+          ...this.props.selectedEvent
+        })
+      }
     }
 
-    handleInputChange = ({target: {name, value}}) => {
+    handleFormSubmit = evt => {
+      evt.preventDefault();
+      if (this.state.id) {
+        this.props.updateEvent(this.state);
+      } else {
+        this.props.createEvent(this.state);
+      }
+    };
+
+    handleInputChange = ({target: { name, value } }) => {
       this.setState({
         [name]: value
       })
@@ -23,7 +35,7 @@ class EventForm extends Component {
 
     render() {
       const {cancelFormOpen} = this.props;
-      const {title, date, city, vanue, hostedBy} = this.state;
+      const {title, date, city, venue, hostedBy} = this.state;
         return (
                   <Segment>
                     <Form onSubmit={this.handleFormSubmit} autoComplete="off">
@@ -54,9 +66,9 @@ class EventForm extends Component {
                       <Form.Field>
                         <label>Venue</label>
                         <input 
-                        name='vanue'
+                        name='venue'
                         onChange={this.handleInputChange}
-                        value={vanue} 
+                        value={venue} 
                         placeholder="Enter the Venue of the event" />
                       </Form.Field>
                       <Form.Field>
