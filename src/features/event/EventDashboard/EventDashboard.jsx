@@ -150,4 +150,4 @@ class EventDashboard extends Component {
         )
     }
 }
-export default EventDashboard;
+export default EventDashboard
